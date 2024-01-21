@@ -1,0 +1,208 @@
+//We create a global variable Imgae 1 and create an array of all the seasons 
+PImage image1;
+int [] seasons = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+
+//in the setup void we load an image of the friends cast and we resize it to fit the screen
+//we then create a canva that is 500 pixels wide and 900 pixels wide and 900 pixels tall then display the image
+
+void setup() {
+  image1 = loadImage("friends.jpg");
+  image1.resize(width, height);
+  size(900, 900);
+  image(image1, 0, 0);
+}
+
+//we create a draw void so that the program can be interactive
+
+void draw() {
+}
+
+
+//when the mouse gets pressed we display the bar graph with a grey background
+
+void mousePressed() {
+  background(175);
+  barGraph(seasons);
+}
+
+//when we press the space bar it replaces the bar graph with the "friends" image
+
+void keyPressed () {
+  if (key==' ') {
+    image(image1, 0, 0);
+  }
+}
+
+//to create the bar graph we create a a void that uses the "seasons" array then we create a for loop that covers all the seasons
+
+void barGraph(int[] seasons) {
+  for (int i=0; i<seasons.length; i++) {
+    float barWidth=width/seasons.length;                                                               // we make each bar width equal to the width of the canva divided by the number of seasons
+    float[] avgs = extractSeasonsData();                                                               // we then create a float named avgs that has the results of the averages for all seasons
+    float barHeight= map(avgs[i], min(avgs), max(avgs), 100, height);                                  // the height of the bars is mapped on the pixels based on the smallest, biggest and overall value
+                                                                                                       // of the averages as well as the lower and higher bound of the value's target range
+                                                                                                       
+    float barX=i*barWidth;                                                                             // the X starting point for each bar would be the season value in the array multiplied by the bar width
+    float barY=height-barHeight;                                                                       // The Y starting point would be the height of the canva - the height of the bar
+    
+    //We then color code each bar with the same color as the color of its DVD using if statements for all 10 seasons
+    
+    if (i == 0) {
+      fill(101, 90, 234);
+      
+    } else if ( i ==1 ) {
+      fill (240, 85, 90);
+      
+    } else if (i==2) {
+      fill(106, 180, 145);
+      
+    } else if (i==3) {
+      fill (255, 179, 57);
+      
+    } else if (i==4) {
+      fill (157, 21, 173);
+      
+    } else if (i==5) {
+      fill (23, 165, 123);
+      
+    } else if (i==6) {
+      fill(222, 125, 172);
+      
+    } else if (i==7) {
+      fill(106, 184, 219);
+      
+    } else if (i==8) {
+      fill (229, 178, 74);
+      
+    } else if (i==9) {
+      fill (229, 74, 77);
+    }
+    
+    //we then draw the bars as rectangles based on the previously declared variables
+    
+    rect (barX, barY, barWidth, barHeight);
+  }
+}
+
+//we create an array to extract the data named "extractSeasonsData and we load the csv file of the data by a string array named "data"
+
+float [] extractSeasonsData() {
+  String [] data = loadStrings("friendsData.csv");
+  
+  //We then create a count and views variable to each season, the count will account for the number of variables and the views for overall viewrship
+  
+  float s1Count = 0;
+  float s1Views = 0;
+  
+  float s2Count = 0;
+  float s2Views = 0;
+  
+  float s3Count = 0;
+  float s3Views = 0;
+  
+  float s4Count = 0;
+  float s4Views = 0;
+  
+  float s5Count = 0;
+  float s5Views = 0;
+  
+  float s6Count = 0;
+  float s6Views = 0;
+  
+  float s7Count = 0;
+  float s7Views = 0;
+  
+  float s8Count = 0;
+  float s8Views = 0;
+  
+  float s9Count = 0;
+  float s9Views = 0;
+  
+  float s10Count = 0;
+  float s10Views = 0;
+  
+  //We then create a for loop through the lines in our file skipping the header row
+  //andd create a string array to split up that splits each line with a coma to get individual cell values
+  
+  for (int i =1; i<data.length; i++) {
+    String [] episodeInfo = splitTokens(data[i], ",");
+    
+    
+    float season = float(episodeInfo[0]);                     //we create a float variable named season that contains the number of the season for each corresponding episode
+    float usViews = float(episodeInfo[1]);                    //we do the same for a variable named "usViews" that has the viewrship for each episode
+
+// using if statements we seperate each season and add all their viewrship in a season views variable 
+//while adding up the number of episodes 
+
+    if (season==1) {
+      s1Count++;
+      s1Views +=usViews;
+      
+    } else if (season==2) {
+      s2Count++;
+      s2Views +=usViews;
+      
+    } else if (season==3) {
+      s3Count++;
+      s3Views +=usViews;
+      
+    } else if (season==4) {
+      s4Count++;
+      s4Views +=usViews;
+      
+    } else if (season==5) {
+      s5Count++;
+      s5Views +=usViews;
+      
+    } else if (season==6) {
+      s6Count++;
+      s6Views +=usViews;
+      
+    } else if (season==7) {
+      s7Count++;
+      s7Views +=usViews;
+      
+    } else if (season==8) {
+      s8Count++;
+      s8Views +=usViews;
+      
+    } else if (season==9) {
+      s9Count++;
+      s9Views +=usViews;
+      
+    } else if (season==10) {
+      s10Count++;
+      s10Views +=usViews;
+    }
+    
+    //we then create a float of averages for all seasons by dividing the viewrship of each season by the number of episodes
+    
+  }
+  float s1Avg=s1Views/s1Count;
+  
+  float s2Avg=s2Views/s2Count;
+  
+  float s3Avg=s3Views/s3Count;
+  
+  float s4Avg=s4Views/s4Count;
+  
+  float s5Avg=s5Views/s5Count;
+  
+  float s6Avg=s6Views/s6Count;
+  
+  float s7Avg=s7Views/s7Count;
+  
+  float s8Avg=s8Views/s8Count;
+  
+  float s9Avg=s9Views/s9Count;
+  
+  float s10Avg=s10Views/s10Count;
+
+//lastly we creat a float array names "avgs" that contains all the averages
+
+  float[] avgs = {s1Avg, s2Avg, s3Avg, s4Avg, s5Avg, s6Avg, s7Avg, s8Avg, s9Avg, s10Avg};
+
+//and we return these values
+
+  return avgs;
+}
